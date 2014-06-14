@@ -33,10 +33,13 @@ describe Hand do
   let(:three_of_a_kind) {Hand.new([card1, card1, card1, card9, card10])}
   let(:full_house) {Hand.new([card1, card1, card1, card9, card9])}
   let(:four_of_a_kind) {Hand.new([card1, card1, card1, card1, card10])}
+  let(:four_fives) { Hand.new(Array.new(4, card3) << card6)}
   let(:high_card) {Hand.new([card1, card3, card5, card7, card10])}
   let(:low_card) {Hand.new([card1, card3, card5, card7, card8])}
   let(:two_pair) {Hand.new([card1, card1, card3, card3, card7])}
   let(:club_high) {Hand.new([card11b, card7b, card8b, card9b, card10b])}
+  let(:two_pair_b) {Hand.new([card2, card2, card3, card3, card7])}
+  let(:pair_b) {Hand.new([card2, card2, card8, card9, card10])}
   
   describe '#flush?' do
     it 'correctly identifies a flush' do
@@ -186,6 +189,18 @@ describe Hand do
   
     it 'uses suits to break ties' do 
       expect(high_card.beats(club_high)).to be true
+    end
+    
+    it 'breaks ties between four of a kinds' do
+      expect(four_fives.beats(four_of_a_kind)).to be true
+    end
+    
+    it 'breaks ties between two pairs' do
+      expect(two_pair_b.beats(two_pair)).to be true
+    end
+    
+    it 'breaks ties between pairs' do
+      expect(pair.beats(pair_b)).to be false
     end
     
   end  
